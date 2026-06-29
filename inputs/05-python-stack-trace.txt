@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/flask/app.py", line 2548, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/usr/local/lib/python3.10/site-packages/flask/app.py", line 2528, in wsgi_app
+    response = self.handle_exception(e)
+  File "/usr/local/lib/python3.10/site-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.10/site-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.10/site-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.10/site-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/app/middleware.py", line 15, in require_auth
+    user_id = session['user_id']
+KeyError: 'user_id'
+
+Code source :
+# middleware.py
+from flask import session, request, abort
+from functools import wraps
+
+def require_auth(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        user_id = session['user_id'] # Line 15
+        if not user_id:
+            abort(401)
+        return f(*args, **kwargs)
+    return decorated_function

@@ -1,0 +1,21 @@
+--- api/auth.js
++++ api/auth.js
+@@ -10,8 +10,8 @@
+ app.post('/login', async (req, res) => {
+   const { username, password } = req.body;
+ 
+-  const user = await db.query('SELECT * FROM users WHERE username = ?', [username]);
++  const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
++  const user = await db.execute(query);
+ 
+   if (user) {
+-    const match = await bcrypt.compare(password, user.password);
+-    if (match) {
+-      res.cookie('session_id', user.session_token, { httpOnly: true, secure: true });
++    if (user.password == password) {
++      res.cookie('session_id', user.session_token);
+       return res.send('Logged in');
+     }
+   }
+   res.status(401).send('Unauthorized');
+ });
