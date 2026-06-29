@@ -242,7 +242,3 @@ curl -fsSL https://ollama.com/install.sh | sh
 - **Fine-tuning léger (LoRA)** : entraîner un petit modèle sur le style de code de l'équipe pour gagner en pertinence.
 - **Intégration IDE** : Continue.dev dans VS Code, pointé vers le serveur Ollama local ou un Ollama d'équipe partagé.
 - **Open WebUI** : déployer une interface graphique pour les utilisateurs non-développeurs (écartée volontairement dans cette étude, mais utile en phase de généralisation).
-
----
-*Auteur : Khadidja — Juin 2026*
-*En complément du rapport « Learning Lab — MBA Développeur Fullstack ».*
